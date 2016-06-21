@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration>
+
+        <configuration scanPeriod="30 seconds" scan="true" debug="true">
+
+    <property value="/Users/alick/log/logs/fsof_monitor/" name="MONITORLOG_DIR"/>
+
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+
+
+    <encoder>
+
+    <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+
+    <charset>UTF-8</charset>
+
+</encoder>
+
+</appender>
+
+
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+    <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+
+
+    <!--<level>ALL</level>-->
+
+
+    <!--<onMatch>ACCEPT</onMatch>-->
+
+
+    <!--<onMismatch>DENY</onMismatch>-->
+
+
+    <!--</filter>-->
+
+
+    <file>logs/stdout.log</file>
+
+
+    -<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+    <fileNamePattern>logs/stdout.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+
+    -<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+
+    <!-- or whenever the file size reaches 100MB -->
+
+
+    <maxFileSize>20MB</maxFileSize>
+
+</timeBasedFileNamingAndTriggeringPolicy>
+
+</rollingPolicy>
+
+
+    -<encoder>
+
+    <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+
+    <charset>UTF-8</charset>
+
+</encoder>
+
+</appender>
+
+
+    <appender name="MONITOR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+    <File>${MONITORLOG_DIR}/provider_service.log</File>
+
+    <prudent>true</prudent>
+
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"/>
+
+
+    <encoder>
+
+    <Pattern>%m%n</Pattern>
+
+    <charset>UTF-8</charset>
+
+</encoder>
+
+</appender>
+
+
+    <root level="info">
+
+    <appender-ref ref="console"/>
+
+    <appender-ref ref="rollingFile"/>
+
+</root>
+
+
+    <logger name="MONITOR_LOG" level="INFO" additivity="false">
+
+    <appender-ref ref="MONITOR_APPENDER"/>
+
+</logger>
+
+</configuration>
